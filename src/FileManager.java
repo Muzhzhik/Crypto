@@ -29,15 +29,38 @@ public class FileManager {
     }
 
     /**
-     * Сохраняет данные в файл. Создает новый с тем же именем, но с приставкой .._enc
+     * Сохраняет данные в файл.
      * @param data
      * @throws IOException
      */
     public void saveEncriptedFile(String data) throws IOException {
+        saveFile(data, Action.ENCRYPT);
+    }
+
+    /**
+     * Сохраняет данные в файл.
+     * @throws IOException
+     */
+    public void saveDecriptedFile(String data) throws IOException {
+        saveFile(data, Action.DECRYPT);
+    }
+
+    private void saveFile(String data, Action action) throws IOException {
         Path newPath = path.getParent();
-        Path newFileName = Path.of(path.getFileName().toString().split("\\.")[0] + "_enc." + path.getFileName().toString().split("\\.")[1]);
+        String fileName = path.getFileName().toString().split("\\.")[0];
+        fileName = fileName + (action == Action.ENCRYPT ? "_enc." : "_dec.");
+        fileName = fileName + path.getFileName().toString().split("\\.")[1];
+        Path newFileName = Path.of(fileName);
         newPath = newPath.resolve(newFileName);
         Files.write(newPath, data.getBytes());
+    }
+
+    /**
+     * Проверяет существует ли файл
+     * @return да/нет
+     */
+    public boolean isExistFile() {
+        return Files.exists(path);
     }
 
 }

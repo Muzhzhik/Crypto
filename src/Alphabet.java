@@ -48,6 +48,9 @@ public class Alphabet {
      * @return новый символ
      */
     public static char getChar(char currentChar, int offset) {
+        if (getCharIndex(currentChar) == -1) {  // Если такого символа нет в алфавите, возвращаем как есть, не шифруем
+            return currentChar;
+        }
         int realOffset = -getCharIndex(currentChar)-offset;
         Collections.rotate(CHARACTER_LIST, -getCharIndex(currentChar)-offset);
         char result = CHARACTER_LIST.get(0);
@@ -58,7 +61,7 @@ public class Alphabet {
     /**
      * Получает индекс символа
      * @param c символ
-     * @return индекс
+     * @return индекс (-1 если такого символа нет)
      */
     public static int getCharIndex(char c) {
         c = charToUpperCase(c);
