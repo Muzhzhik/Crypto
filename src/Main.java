@@ -3,8 +3,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-       //test();
-        try {
+        test();
+        testFiles();
+
+       /*try {
             loading();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -15,10 +17,12 @@ public class Main {
         String path = scanner.nextLine();
         System.out.print("Что нужно делать?:\n\t" + Actions.ENCRYPT.ordinal() + " - Зашифровать\n\t" + Actions.DECRYPT.ordinal() + " - Расшифровать\n\t" + Actions.BRUTEFORCE.ordinal() + " - Подбор пароля\n----> ");
         int action = scanner.nextInt();
+        */
     }
 
     /**
      * Пафосная загрузка)
+     *
      * @throws InterruptedException
      */
     private static void loading() throws InterruptedException {
@@ -34,6 +38,14 @@ public class Main {
 
     // Тесты
     private static void test() {
+        String encriptString = "Привет ребята!";
+        int key = -2;
+        String result = Cryptographer.encrypt(encriptString, key);
+        System.out.println(result);
+        System.out.println(Cryptographer.decrypt(result, key));
+    }
+
+    private static void testFiles() {
         String path = "C:\\JavaRushFiles\\inputFile_enc.txt";
         FileManager fileManager = new FileManager(path);
         try {
@@ -43,11 +55,5 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        String encriptString = "Привет ребята!";
-        int key = -2;
-        String result = Cryptographer.encrypt(encriptString, key);
-        System.out.println(result);
-        System.out.println(Cryptographer.decrypt(result, key));
     }
 }
