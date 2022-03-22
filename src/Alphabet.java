@@ -2,87 +2,64 @@ import java.util.*;
 
 public class Alphabet {
 
-    private static final List<Character> characterList = new ArrayList<>();
+    private static final Character FROM_CHAR = 'А';
+    private static final Character TO_CHAR = 'Я';
+    private static final char[] ADDITIONAL_CHARS =  {'.', ',', ':', '-', '!', '?', ' '};
 
-    private static String ALPHABET;
-    private static Map<Character, Integer> MAP_ALPHABET;
-    private static char[] CHAR_ALPHABET;
+
+    private static final List<Character> CHARACTER_LIST = new ArrayList<>();
+    private static final Map<Character, Integer> MAP_ALPHABET = new HashMap<>();
 
     static {
         initAlphabet();
     }
 
+    /**
+     * Инициализация алфавита
+     */
     private static void initAlphabet() {
-        MAP_ALPHABET = new HashMap<>();
-        StringBuilder stringBuilder = new StringBuilder();
         int charIndexCounter = 0;
         // Add Characters
-        for (int i = 'А'; i <= 'Я'; i++) {
-            stringBuilder.append((char) i);
+        for (int i = FROM_CHAR; i <= TO_CHAR; i++) {
             MAP_ALPHABET.put((char) i, charIndexCounter++);
-            characterList.add((char) i); // test
+            CHARACTER_LIST.add((char) i);
         }
 
         // Add other symbols
-        char[] chars = {'.', ',', ':', '-', '!', '?', ' '};
-        for (Character symbol : chars) {
-            stringBuilder.append(symbol);
+        for (Character symbol : ADDITIONAL_CHARS) {
             MAP_ALPHABET.put(symbol, charIndexCounter++);
-            characterList.add(symbol); // test
+            CHARACTER_LIST.add(symbol);
         }
-        ALPHABET = stringBuilder.toString();
-        CHAR_ALPHABET = ALPHABET.toCharArray();
-
-//        System.out.println("Current Alphabet: " + ALPHABET + "\nAlphabet max index: " + (ALPHABET.length() - 1));
     }
 
-    public static String getAlphabet() {
-        return ALPHABET;
-    }
-
-    public static char[] getCharAlphabet() {
-        return CHAR_ALPHABET;
-    }
-
+    /**
+     * Получить символ по индексу
+     * @param index индекс символа
+     * @return символ в массиве
+     */
     public static char getChar(int index) {
-        return CHAR_ALPHABET[index];
+        return CHARACTER_LIST.get(index);
     }
 
+    /**
+     * Принимает символ, смещается относительно него на offset и возвращает новый
+     * @param currentChar символ относительно которого смещаемся
+     * @param offset на сколько символов сместиться
+     * @return новый символ
+     */
     public static char getChar(char currentChar, int offset) {
         int realOffset = -getCharIndex(currentChar)-offset;
-        Collections.rotate(characterList, -getCharIndex(currentChar)-offset);
-        char result = characterList.get(0);
-        Collections.rotate(characterList, -realOffset);
+        Collections.rotate(CHARACTER_LIST, -getCharIndex(currentChar)-offset);
+        char result = CHARACTER_LIST.get(0);
+        Collections.rotate(CHARACTER_LIST, -realOffset);
         return result;
-
-      /*  currentChar = charToUpperCase(currentChar);
-        char result;
-        int charMaxIndex = CHAR_ALPHABET.length - 1;
-        int currentCharIndex = getCharIndex(currentChar);
-
-        if (Math.abs(offset) > CHAR_ALPHABET.length) {
-            int remains = Math.abs(offset % CHAR_ALPHABET.length);
-            if (remains == 0) {
-                offset = remains;
-            } else if (remains > 0 && remains < CHAR_ALPHABET.length) {
-                offset = offset > 0 ? remains : -remains;
-            }
-        }
-
-        if (offset == 0) {
-            result = getChar(currentCharIndex);
-        } else if (currentCharIndex + offset > charMaxIndex) {
-            int newIndex = currentCharIndex + offset - charMaxIndex - 1;
-            result = getChar(newIndex);
-        } else if (currentCharIndex + offset < 0) {
-            int newIndex = charMaxIndex - Math.abs(currentCharIndex + offset) + 1;
-            result = getChar(newIndex);
-        } else {
-            result = getChar(currentCharIndex + offset);
-        }
-        return result; */
     }
 
+    /**
+     * Получает индекс символа
+     * @param c символ
+     * @return индекс
+     */
     public static int getCharIndex(char c) {
         c = charToUpperCase(c);
         Integer result = MAP_ALPHABET.get(c);
@@ -91,6 +68,11 @@ public class Alphabet {
         return result;
     }
 
+    /**
+     * Приводит символ в верхний регистр
+     * @param currentChar символ
+     * @return символ в верхнем регистре
+     */
     private static char charToUpperCase(char currentChar) {
         String upperCaseChar = "" + currentChar;
         upperCaseChar = upperCaseChar.toUpperCase();
