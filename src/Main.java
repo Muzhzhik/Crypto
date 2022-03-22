@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         try {
             loading();
@@ -13,8 +14,7 @@ public class Main {
             System.out.print("Что нужно делать?:\n\t" +
                     Action.ENCRYPT.ordinal() + " - Зашифровать\n\t" +
                     Action.DECRYPT.ordinal() + " - Расшифровать\n\t" +
-                    Action.BRUTEFORCE.ordinal() +
-                    " - Подбор пароля\n----> ");
+                    Action.BRUTEFORCE.ordinal() + " - Подбор пароля\n----> ");
             Action action;
             while (true) {
                 try {
@@ -82,24 +82,7 @@ public class Main {
         }
     }
 
-    // Тесты
     private static void test() {
-        String encriptString = "Привет ребята!";
-        int key = -2;
-        String result = Cryptographer.encrypt(encriptString, key);
-        System.out.println(result);
-        System.out.println(Cryptographer.decrypt(result, key));
-    }
 
-    private static void testFiles() {
-        String path = "C:\\JavaRushFiles\\inputFile_enc.txt";
-        FileManager fileManager = new FileManager(path);
-        try {
-            String data = fileManager.getFileData();
-            data = Cryptographer.decrypt(data, 23);
-            fileManager.saveEncriptedFile(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -53,6 +53,7 @@ public class FileManager {
         Path newFileName = Path.of(fileName);
         newPath = newPath.resolve(newFileName);
         Files.write(newPath, data.getBytes());
+        System.out.println("Создан файл " + newPath);
     }
 
     /**
