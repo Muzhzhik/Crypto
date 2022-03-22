@@ -82,4 +82,12 @@ public class Alphabet {
         currentChar = upperCaseChar.charAt(0);
         return currentChar;
     }
+
+    public static String[] getAdditionalChars() {
+        String[] strings = new String[ADDITIONAL_CHARS.length];
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = ADDITIONAL_CHARS[i] + "";
+        }
+        return strings;
+    }
 }

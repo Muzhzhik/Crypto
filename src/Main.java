@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -45,6 +46,14 @@ public class Main {
                     }
                 }
                 encryptDecryptAction(path, key, action);
+            } else if (action == Action.BRUTEFORCE) {
+                    BruteforceManager bruteforceManager = new BruteforceManager();
+                    try {
+                        bruteforceManager.doBruteForce(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
             }
         }
     }
