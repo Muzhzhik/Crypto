@@ -1,35 +1,85 @@
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BruteforceManager {
 
     public void doBruteForce(String path) throws IOException {
+        Map<Integer, String> searchResults = new HashMap<>();
         FileManager fileManager = new FileManager(path);
         String data = fileManager.getFileData();
         if (data != null && data.length() > 0) {
             int key = 0;
             boolean stop = false;
             while (!stop) {
-               stop = isBrutForceDone(Cryptographer.decrypt(data, key));
-               if (!stop)
-                   key++;
+                // Понимаем, что прошли круг и останавливаемся
+                if (key != 0 && key - Alphabet.getCharacterList().size() == 0) {
+                    stop = true;
+                }
+
+                String encData = Cryptographer.decrypt(data, key);
+                if (isBrutForceDone(encData)) {
+                    // Записываем варианты которые нашли в мапу
+                    searchResults.put(key, data);
+
+                }
+                if (!stop)
+                    key++;
             }
-            System.out.println("Подбор закончен. Ключ - " + key);
+            System.out.println("Подбор закончен. Вариантов: " + searchResults.size());
         } else {
             System.out.println("В файле нет данных.");
         }
     }
 
+    //C:\JavaRushFiles\test_enc.txt
+
     private boolean isBrutForceDone(String dataForAnalyze) {
         String data = dataForAnalyze.toUpperCase();
-        String[] split =  data.split(" ");
-        int countOfCont = 0;
-        for (String s : split) {
-            for (String ch : Alphabet.getAdditionalChars()) {
-                if (s.endsWith(ch) && !s.startsWith(ch) && !s.contains(ch)) { // Кривое условие. Надо бы как-то regex подтянуть!
-                    countOfCont++;
+        // Над этим условием можно подумать еще конечно
+        if (data.endsWith(":") || data.endsWith(",") || data.endsWith("-"))
+            return false;
+
+        String[] splitString = data.split("\\s");
+        int countOfRealWords = 0;
+
+        for (String s : splitString) {
+            if (!s.equals("")) {
+                String additionalCh = Alphabet.containsAdditional(s);
+                if (additionalCh != null) {
+                    // Если сходу понимаем, что чушь, сразу выкидываем
+                    if (!Alphabet.startWithAdditional(s) && Alphabet.containsAdditionalCount(s) > 2 && !s.equals("-")) {
+                        return false;
+                    } else if (Alphabet.startWithAdditional(s) && countOfRealWords <=0) {
+                        return false;
+                    }
+
+                    if (!s.startsWith(additionalCh)) {
+                        if (s.endsWith(additionalCh)) {
+                            String[] lastSplit = s.split("\\" + additionalCh);
+                            if (lastSplit.length == 1 && Alphabet.containsAdditional(lastSplit[0]) == null) {
+                                countOfRealWords++;
+                            } else {
+                                countOfRealWords--;
+                            }
+                        } else {
+                            if (Alphabet.containsAdditionalCount(s) == 1 && s.contains("-")){
+                               countOfRealWords++;
+                            } else {
+                                countOfRealWords--;
+                            }
+                        }
+                    } else {
+                        countOfRealWords--;
+                    }
+                } else {
+                    countOfRealWords++;
                 }
             }
         }
-        return countOfCont > 0;
+        return countOfRealWords > 0;
     }
+
+
 }
