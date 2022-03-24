@@ -44,7 +44,7 @@ public class Main {
         System.out.print("Инициализация");
         for (int i = 0; i < 3; i++) {
             System.out.print(".");
-            Thread.sleep(700);
+            Thread.sleep(500);
         }
         System.out.println();
     }
