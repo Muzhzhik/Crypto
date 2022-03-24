@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class FileManager {
 
@@ -47,15 +48,19 @@ public class FileManager {
     }
 
     private void saveFile(String data, Action action) throws IOException {
+        // Добавляем дату, чтобы использовать ее в имени файла
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH-mm-ss");
+        String date = dateTime.format(dateTimeFormatter);
 
         Path newPath = path.getParent();
         String fileName = path.getFileName().toString().split("\\.")[0];
-        fileName = fileName + (action == Action.ENCRYPT ? "_enc." : "_dec.");
+        fileName = fileName + (action == Action.ENCRYPT ? "_enc_" : "_dec_") + date + ".";
         fileName = fileName + path.getFileName().toString().split("\\.")[1];
         Path newFileName = Path.of(fileName);
         newPath = newPath.resolve(newFileName);
         Files.write(newPath, data.getBytes());
-        System.out.println("Создан файл " + newPath);
+        Logger.printToConsole("Создан файл " + newPath);
     }
 
     /**

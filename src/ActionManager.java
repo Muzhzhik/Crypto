@@ -14,7 +14,7 @@ public class ActionManager {
                     key = Integer.parseInt(inputManager.createInput("Введите ключ шифрования (целое число): "));
                     break;
                 } catch (IllegalArgumentException e) {
-                   inputManager.printToConsole("Неверный ввод.");
+                   Logger.printToConsole("Неверный ввод.");
                 }
             }
             encryptDecryptAction(path, key, action);

@@ -1,5 +1,3 @@
-import java.time.LocalDateTime;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -9,8 +7,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        LocalDateTime dateTime = LocalDateTime.now();
-        System.out.println(dateTime);
         InputManager inputManager = new InputManager();
         Action action;
         while (true) {
@@ -26,7 +22,7 @@ public class Main {
             } catch (IllegalArgumentException e) {
                 // do nothing
             }
-            inputManager.printToConsole("Введите число из списка!\n----> ");
+            Logger.printToConsole("Введите число из списка!\n----> ");
         }
 
         ActionManager.doAction(action);
@@ -39,13 +35,13 @@ public class Main {
      * @throws InterruptedException
      */
     private static void loading() throws InterruptedException {
-        System.out.println("EnDeCripter by Sergey Muzhzhukhin.");
+        Logger.printToConsole("EnDeCripter by Sergey Muzhzhukhin.\n");
         Thread.sleep(500);
-        System.out.print("Инициализация");
+        Logger.printToConsole("Инициализация");
         for (int i = 0; i < 3; i++) {
-            System.out.print(".");
+            Logger.printToConsole(".");
             Thread.sleep(500);
         }
-        System.out.println();
+        Logger.printToConsole("\n");
     }
 }

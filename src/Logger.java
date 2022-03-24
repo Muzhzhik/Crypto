@@ -1,9 +1,9 @@
-public interface Logger {
-    default void log(FileManager fileManager, String message) {
+public class Logger {
+    public static void log(FileManager fileManager, String message) {
         // Записываем лог в файл
     }
 
-    default void printToConsole(String message) {
+    public static void printToConsole(String message) {
         System.out.print(message);
     }
 }

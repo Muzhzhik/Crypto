@@ -25,9 +25,9 @@ public class Bruteforce {
                 if (!stop)
                     key++;
             }
-            System.out.println("Подбор закончен. Вариантов: " + searchResults.size());
+            Logger.printToConsole("Подбор закончен. Вариантов: " + searchResults.size());
         } else {
-            System.out.println("В файле нет данных.");
+            Logger.printToConsole("В файле нет данных.");
         }
     }
 
