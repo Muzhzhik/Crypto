@@ -8,7 +8,7 @@ public class Bruteforce {
         Map<Integer, String> searchResults = new HashMap<>();
         FileManager fileManager = new FileManager(path);
         String data = fileManager.getFileData();
-        if (data != null && data.length() > 0) {
+        if (data != null && data.length() > 0) { // Здесь может быть стоит проверить на длину, если текст слишком длинный, взять половину от него
             int key = 0;
             boolean stop = false;
             while (!stop) {
@@ -26,6 +26,9 @@ public class Bruteforce {
                     key++;
             }
             Logger.printToConsole("Подбор закончен. Вариантов: " + searchResults.size());
+
+                        /* Сделать сохранение файла с результатами! */
+
         } else {
             Logger.printToConsole("В файле нет данных.");
         }
