@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 
 public class FileManager {
 
@@ -46,6 +47,7 @@ public class FileManager {
     }
 
     private void saveFile(String data, Action action) throws IOException {
+
         Path newPath = path.getParent();
         String fileName = path.getFileName().toString().split("\\.")[0];
         fileName = fileName + (action == Action.ENCRYPT ? "_enc." : "_dec.");

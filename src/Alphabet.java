@@ -123,34 +123,34 @@ public class Alphabet {
         return result;
     }
 
-    public static boolean endtWithAdditional(String str) {
-        boolean result = false;
-        for (char ch : Alphabet.ADDITIONAL_CHARS) {
-            if (str.endsWith(ch + "")) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
+//    public static boolean endtWithAdditional(String str) {
+//        boolean result = false;
+//        for (char ch : Alphabet.ADDITIONAL_CHARS) {
+//            if (str.endsWith(ch + "")) {
+//                result = true;
+//                break;
+//            }
+//        }
+//        return result;
+//    }
 
     public static List<Character> getCharacterList() {
         return CHARACTER_LIST;
     }
 
-    public static String getProcent(String data) {
-        int charCount = 0;
-        int symbolCount = 0;
-        char[] array = data.toCharArray();
-        for(char ch : array) {
-            if (ch != ' ' && startWithAdditional(ch + "")) {
-                charCount++;
-            } else if (ch != ' '){
-                symbolCount++;
-            }
-        }
-        int procentChars = (charCount * 100) / (charCount + symbolCount);
-        int procentSymbols = (symbolCount * 100) / (charCount + symbolCount);
-        return "char%: " + procentChars + " symbol%: " + procentSymbols;
-    }
+//    public static String getProcent(String data) {
+//        int charCount = 0;
+//        int symbolCount = 0;
+//        char[] array = data.toCharArray();
+//        for(char ch : array) {
+//            if (ch != ' ' && startWithAdditional(ch + "")) {
+//                charCount++;
+//            } else if (ch != ' '){
+//                symbolCount++;
+//            }
+//        }
+//        int procentChars = (charCount * 100) / (charCount + symbolCount);
+//        int procentSymbols = (symbolCount * 100) / (charCount + symbolCount);
+//        return "char%: " + procentChars + " symbol%: " + procentSymbols;
+//    }
 }

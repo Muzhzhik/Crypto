@@ -1,9 +1,8 @@
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BruteforceManager {
+public class Bruteforce {
 
     public void doBruteForce(String path) throws IOException {
         Map<Integer, String> searchResults = new HashMap<>();
@@ -22,7 +21,6 @@ public class BruteforceManager {
                 if (isBrutForceDone(encData)) {
                     // Записываем варианты которые нашли в мапу
                     searchResults.put(key, data);
-
                 }
                 if (!stop)
                     key++;
@@ -80,6 +78,4 @@ public class BruteforceManager {
         }
         return countOfRealWords > 0;
     }
-
-
 }
