@@ -47,5 +47,4 @@ public class ActionManager {
     private static void test() {
 
     }
-
 }
