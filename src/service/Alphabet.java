@@ -35,15 +35,6 @@ public class Alphabet {
     }
 
     /**
-     * Получить символ по индексу
-     * @param index индекс символа
-     * @return символ в массиве
-     */
-    public static char getChar(int index) {
-        return CHARACTER_LIST.get(index);
-    }
-
-    /**
      * Принимает символ, смещается относительно него на offset и возвращает новый
      * @param currentChar символ относительно которого смещаемся
      * @param offset на сколько символов сместиться
@@ -85,14 +76,6 @@ public class Alphabet {
         return currentChar;
     }
 
-    public static String[] getAdditionalChars() {
-        String[] strings = new String[ADDITIONAL_CHARS.length];
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = ADDITIONAL_CHARS[i] + "";
-        }
-        return strings;
-    }
-
     public static String containsAdditional(String str) {
         String result = null;
         for (char ch : ADDITIONAL_CHARS) {
@@ -125,34 +108,9 @@ public class Alphabet {
         return result;
     }
 
-//    public static boolean endtWithAdditional(String str) {
-//        boolean result = false;
-//        for (char ch : service.Alphabet.ADDITIONAL_CHARS) {
-//            if (str.endsWith(ch + "")) {
-//                result = true;
-//                break;
-//            }
-//        }
-//        return result;
-//    }
 
     public static List<Character> getCharacterList() {
         return CHARACTER_LIST;
     }
 
-//    public static String getProcent(String data) {
-//        int charCount = 0;
-//        int symbolCount = 0;
-//        char[] array = data.toCharArray();
-//        for(char ch : array) {
-//            if (ch != ' ' && startWithAdditional(ch + "")) {
-//                charCount++;
-//            } else if (ch != ' '){
-//                symbolCount++;
-//            }
-//        }
-//        int procentChars = (charCount * 100) / (charCount + symbolCount);
-//        int procentSymbols = (symbolCount * 100) / (charCount + symbolCount);
-//        return "char%: " + procentChars + " symbol%: " + procentSymbols;
-//    }
 }
