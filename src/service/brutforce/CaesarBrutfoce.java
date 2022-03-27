@@ -1,13 +1,20 @@
-import java.io.IOException;
+package service.brutforce;
+
+import controller.ConsoleController;
+import service.Alphabet;
+import service.cryptor.CaesarCryptor;
+import service.cryptor.Cryptor;
+import utils.ConsoleColors;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bruteforce {
+public class CaesarBrutfoce implements Brutforce{
 
-    public void doBruteForce(String path) throws IOException {
+    @Override
+    public String doBrutforce(String data) {
         Map<Integer, String> searchResults = new HashMap<>();
-        FileManager fileManager = new FileManager(path);
-        String data = fileManager.getFileData();
+        Cryptor cryptor = new CaesarCryptor();
         if (data != null && data.length() > 0) { // Здесь может быть стоит проверить на длину, если текст слишком длинный, взять половину от него
             int key = 0;
             boolean stop = false;
@@ -17,7 +24,7 @@ public class Bruteforce {
                     stop = true;
                 }
 
-                String encData = Cryptographer.decrypt(data, key);
+                String encData = cryptor.decrypt(data, key);
                 if (isBrutForceDone(encData)) {
                     // Записываем варианты которые нашли в мапу
                     searchResults.put(key, data);
@@ -25,16 +32,23 @@ public class Bruteforce {
                 if (!stop)
                     key++;
             }
-            Logger.printToConsole("Подбор закончен. Вариантов: " + searchResults.size());
+            ConsoleController.printColorText("Brutforce done. Possible case(s) count: " + searchResults.size() + "\n", ConsoleColors.GREEN);
 
-                        /* Сделать сохранение файла с результатами! */
-
-        } else {
-            Logger.printToConsole("В файле нет данных.");
+            if (searchResults.size() > 0) {
+                StringBuilder stringBuilder = new StringBuilder();
+                ConsoleController.printColorText(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
+                String keysString = "";
+                for (Map.Entry<Integer, String> entry : searchResults.entrySet()) {
+                    keysString += entry.getKey() + ", ";
+                    stringBuilder.append("key '" + entry.getKey() + "':\n\n");
+                    stringBuilder.append(entry.getValue() + "\n\n");
+                }
+                ConsoleController.printColorText(keysString.substring(0, keysString.length() - 2), ConsoleColors.PURPLE);
+                return stringBuilder.toString();
+            }
         }
+        return null;
     }
-
-    //C:\JavaRushFiles\test_enc.txt
 
     private boolean isBrutForceDone(String dataForAnalyze) {
         String data = dataForAnalyze.toUpperCase();
@@ -66,7 +80,7 @@ public class Bruteforce {
                             }
                         } else {
                             if (Alphabet.containsAdditionalCount(s) == 1 && s.contains("-")){
-                               countOfRealWords++;
+                                countOfRealWords++;
                             } else {
                                 countOfRealWords--;
                             }

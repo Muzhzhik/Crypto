@@ -1,3 +1,5 @@
+package service;
+
 import java.util.*;
 
 public class Alphabet {
@@ -125,7 +127,7 @@ public class Alphabet {
 
 //    public static boolean endtWithAdditional(String str) {
 //        boolean result = false;
-//        for (char ch : Alphabet.ADDITIONAL_CHARS) {
+//        for (char ch : service.Alphabet.ADDITIONAL_CHARS) {
 //            if (str.endsWith(ch + "")) {
 //                result = true;
 //                break;
