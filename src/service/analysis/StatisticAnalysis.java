@@ -69,9 +69,4 @@ public class StatisticAnalysis implements Analyser{
 
         return result;
     }
-
-    //C:\JavaRushFiles\27_03_2022_14-41-13.txt
-
-    //C:\JavaRushFiles\test.txt
-
 }

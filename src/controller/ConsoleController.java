@@ -48,10 +48,4 @@ public class ConsoleController {
 
         new ActionManager(action).doAction();
     }
-
-
-//    public static void printColorText(String text, String color) {
-//        System.out.print(color + text);
-//        System.out.print(ConsoleColors.RESET);
-//    }
 }
