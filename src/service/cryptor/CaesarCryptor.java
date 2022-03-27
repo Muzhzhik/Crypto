@@ -22,8 +22,4 @@ public class CaesarCryptor implements Cryptor{
         return encrypt(data, -key);
     }
 
-    @Override
-    public String getCryptorName() {
-        return "Caesar";
-    }
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import controller.ConsoleController;
+import service.logger.Logger;
 import utils.ConsoleColors;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 public class FileManagerDAO implements DataDAO{
 
+    Logger logger = new Logger();
+
     @Override
     public String getData(String sourcePath) {
         String result = null;
@@ -20,11 +23,11 @@ public class FileManagerDAO implements DataDAO{
             try {
                 bytes = Files.readAllBytes(path);
             } catch (IOException e) {
-                ConsoleController.printColorText("Error: Cant read file\n", ConsoleColors.RED_BOLD_BRIGHT);
+                logger.error("Cant read file\n");
             }
             result = new String(bytes);
         } else {
-            ConsoleController.printColorText("Error: Cant find file\n", ConsoleColors.RED_BOLD_BRIGHT);
+            logger.error("Cant find file\n");
         }
         return result;
     }
@@ -35,20 +38,17 @@ public class FileManagerDAO implements DataDAO{
 
         // Добавляем дату, чтобы использовать ее в имени файла
         LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH-mm-ss");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH-mm-ss");
         String date = dateTime.format(dateTimeFormatter);
-
         Path newPath = path.getParent();
-        String fileName = path.getFileName().toString().split("\\.")[0];
-        fileName = fileName + "_" + date + ".";
-        fileName = fileName + path.getFileName().toString().split("\\.")[1];
+        String fileName = date + "." + path.getFileName().toString().split("\\.")[1];
         Path newFileName = Path.of(fileName);
         newPath = newPath.resolve(newFileName);
         try {
             Files.write(newPath, data.getBytes());
         } catch (IOException e) {
-            ConsoleController.printColorText("Error: Cant write file", ConsoleColors.RED_BOLD_BRIGHT);
+            logger.error("Cant write file");
         }
-        ConsoleController.printColorText("File created " + newPath, ConsoleColors.GREEN_BOLD_BRIGHT);
+        logger.info("File created " + newPath, ConsoleColors.GREEN_BOLD_BRIGHT);
     }
 }

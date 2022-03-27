@@ -4,6 +4,7 @@ import controller.ConsoleController;
 import service.Alphabet;
 import service.cryptor.CaesarCryptor;
 import service.cryptor.Cryptor;
+import service.logger.Logger;
 import utils.ConsoleColors;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ public class CaesarBrutfoce implements Brutforce{
 
     @Override
     public String doBrutforce(String data) {
+        Logger logger = new Logger();
         Map<Integer, String> searchResults = new HashMap<>();
         Cryptor cryptor = new CaesarCryptor();
         if (data != null && data.length() > 0) { // Здесь может быть стоит проверить на длину, если текст слишком длинный, взять половину от него
@@ -27,23 +29,23 @@ public class CaesarBrutfoce implements Brutforce{
                 String encData = cryptor.decrypt(data, key);
                 if (isBrutForceDone(encData)) {
                     // Записываем варианты которые нашли в мапу
-                    searchResults.put(key, data);
+                    searchResults.put(key, encData);
                 }
                 if (!stop)
                     key++;
             }
-            ConsoleController.printColorText("Brutforce done. Possible case(s) count: " + searchResults.size() + "\n", ConsoleColors.GREEN);
+            logger.info("Brutforce done. Possible case(s) count: " + searchResults.size() + "\n", ConsoleColors.GREEN);
 
             if (searchResults.size() > 0) {
                 StringBuilder stringBuilder = new StringBuilder();
-                ConsoleController.printColorText(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
+                logger.info(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
                 String keysString = "";
                 for (Map.Entry<Integer, String> entry : searchResults.entrySet()) {
                     keysString += entry.getKey() + ", ";
                     stringBuilder.append("key '" + entry.getKey() + "':\n\n");
                     stringBuilder.append(entry.getValue() + "\n\n");
                 }
-                ConsoleController.printColorText(keysString.substring(0, keysString.length() - 2), ConsoleColors.PURPLE);
+                logger.info(keysString.substring(0, keysString.length() - 2), ConsoleColors.PURPLE);
                 return stringBuilder.toString();
             }
         }

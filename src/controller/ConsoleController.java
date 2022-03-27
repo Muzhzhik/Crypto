@@ -1,6 +1,7 @@
 package controller;
 
 import service.ActionManager;
+import service.logger.Logger;
 import utils.Action;
 import utils.ConsoleColors;
 
@@ -8,6 +9,7 @@ import java.util.Scanner;
 
 public class ConsoleController {
     private static final String APP_NAME = "************ CRYPTOR ************";
+    Logger logger = new Logger();
 
     public void printMainMenu() {
         printHeader();
@@ -15,21 +17,22 @@ public class ConsoleController {
     }
 
     private void printHeader() {
-        printColorText("dev by Sergey Muzhzhukhin.\n\n", ConsoleColors.WHITE);
-        printColorText(APP_NAME, ConsoleColors.BLUE_BOLD);
-        printColorText("\n\n", ConsoleColors.RESET);
+        logger.info("dev by Sergey Muzhzhukhin.\n\n", ConsoleColors.WHITE);
+        logger.info(APP_NAME, ConsoleColors.BLUE_BOLD);
+        logger.info("\n\n", ConsoleColors.RESET);
     }
 
     private void printMakeChoise() {
         Action action;
         Scanner scanner = new Scanner(System.in);
-        printColorText("Make your choise:\n", ConsoleColors.RESET);
-        printColorText(Action.ENCRYPT.ordinal() + " - Encrypt\n", ConsoleColors.BLUE);
-        printColorText(Action.DECRYPT.ordinal() + " - Decrypt\n", ConsoleColors.BLUE);
-        printColorText(Action.BRUTEFORCE.ordinal() + " - Brut force\n\n", ConsoleColors.BLUE);
-        printColorText(Action.EXIT.ordinal() + " - Exit\n\n", ConsoleColors.CYAN);
+        logger.info("Make your choise:\n", ConsoleColors.RESET);
+        logger.info(Action.ENCRYPT.ordinal() + " - Encrypt\n", ConsoleColors.BLUE);
+        logger.info(Action.DECRYPT.ordinal() + " - Decrypt\n", ConsoleColors.BLUE);
+        logger.info(Action.BRUTEFORCE.ordinal() + " - Brut force\n", ConsoleColors.BLUE);
+        logger.info(Action.ANALYZE.ordinal() + " - Crypto analysis\n\n", ConsoleColors.BLUE);
+        logger.info(Action.EXIT.ordinal() + " - Exit\n\n", ConsoleColors.CYAN);
         do {
-            printColorText("> ", ConsoleColors.RESET);
+            logger.info("> ", ConsoleColors.RESET);
             String read = scanner.nextLine();
             try {
                 int actionIndex = Integer.parseInt(read.trim());
@@ -40,15 +43,15 @@ public class ConsoleController {
             } catch (IllegalArgumentException e) {
                 // do nothing
             }
-            printColorText("Make right choise\n", ConsoleColors.RED);
+            logger.info("Make right choise\n", ConsoleColors.RED);
         } while (true);
 
         new ActionManager(action).doAction();
     }
 
 
-    public static void printColorText(String text, String color) {
-        System.out.print(color + text);
-        System.out.print(ConsoleColors.RESET);
-    }
+//    public static void printColorText(String text, String color) {
+//        System.out.print(color + text);
+//        System.out.print(ConsoleColors.RESET);
+//    }
 }

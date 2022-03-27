@@ -6,7 +6,7 @@ public class Alphabet {
 
     private static final Character FROM_CHAR = 'А';
     private static final Character TO_CHAR = 'Я';
-    private static final char[] ADDITIONAL_CHARS =  {'.', ',', ':', '-', '!', '?', ' '};
+    private static final char[] ADDITIONAL_CHARS =  {'.', ',', ':', '-', '!', '?', ' ', '\n'};
 
 
     private static final List<Character> CHARACTER_LIST = new ArrayList<>();
