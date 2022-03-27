@@ -1,6 +1,5 @@
 package service;
 
-import controller.ConsoleController;
 import dao.FileManagerDAO;
 import service.brutforce.Brutforce;
 import service.brutforce.CaesarBrutfoce;

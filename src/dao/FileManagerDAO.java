@@ -1,6 +1,4 @@
 package dao;
-
-import controller.ConsoleController;
 import service.logger.Logger;
 import utils.ConsoleColors;
 
@@ -47,7 +45,7 @@ public class FileManagerDAO implements DataDAO{
         try {
             Files.write(newPath, data.getBytes());
         } catch (IOException e) {
-            logger.error("Cant write file");
+            logger.error("Error: Cant write file");
         }
         logger.info("File created " + newPath, ConsoleColors.GREEN_BOLD_BRIGHT);
     }
