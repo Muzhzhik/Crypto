@@ -5,6 +5,7 @@ import utils.ConsoleColors;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -32,21 +33,28 @@ public class FileManagerDAO implements DataDAO{
 
     @Override
     public void writeData(String sourcePath, String data) {
-        Path path = Path.of(sourcePath);
-
-        // Добавляем дату, чтобы использовать ее в имени файла
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH-mm-ss");
-        String date = dateTime.format(dateTimeFormatter);
-        Path newPath = path.getParent();
-        String fileName = date + "." + path.getFileName().toString().split("\\.")[1];
-        Path newFileName = Path.of(fileName);
-        newPath = newPath.resolve(newFileName);
+        Path newPath = createNewFilePath(sourcePath);
         try {
             Files.write(newPath, data.getBytes());
         } catch (IOException e) {
             logger.error("Error: Cant write file");
         }
         logger.info("File created " + newPath, ConsoleColors.GREEN_BOLD_BRIGHT);
+    }
+
+    private Path createNewFilePath(String sourcePath) {
+        Path path = Path.of(sourcePath).toAbsolutePath();
+        String date = createDateString();
+        Path newPath = path.getParent();
+        String fileName = date + "." + path.getFileName().toString().split("\\.")[1];
+        Path newFileName = Path.of(fileName);
+        newPath = newPath.resolve(newFileName);
+        return newPath;
+    }
+
+    private String createDateString() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH-mm-ss");
+        return dateTime.format(dateTimeFormatter);
     }
 }

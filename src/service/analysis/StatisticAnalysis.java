@@ -17,29 +17,7 @@ public class StatisticAnalysis implements Analyser{
             if (encEntry.getValue() == EMPTY_VALUE)
                 continue;
 
-            Map.Entry<Character, Integer> bestСoincidence = null;
-            for(var entry : nonEncDataAnalysis.entrySet()) {
-                if (entry.getValue() == EMPTY_VALUE)
-                    continue;
-
-                if (bestСoincidence == null) {
-                    bestСoincidence = entry;
-                } else if (entry.getValue() == encEntry.getValue()) {
-                    newAlphabet.put(encEntry.getKey(), entry.getKey());
-                    bestСoincidence = null;
-                    entry.setValue(EMPTY_VALUE);
-                    encEntry.setValue(EMPTY_VALUE);
-                    break;
-                } else {
-                    if (Math.abs(bestСoincidence.getValue() - encEntry.getValue()) < Math.abs(bestСoincidence.getValue() - entry.getValue())) {
-                        bestСoincidence = entry;
-                    }
-                }
-            }
-            if (bestСoincidence != null) {
-                newAlphabet.put(encEntry.getKey(), bestСoincidence.getKey());
-                nonEncDataAnalysis.replace(bestСoincidence.getKey(), EMPTY_VALUE);
-            }
+            findBestCoincidence(nonEncDataAnalysis, newAlphabet, encEntry);
         }
 
         StringBuilder encryptedString = new StringBuilder();
@@ -49,6 +27,33 @@ public class StatisticAnalysis implements Analyser{
         }
 
         return encryptedString.toString();
+    }
+
+    private void findBestCoincidence(Map<Character, Integer> nonEncDataAnalysis, Map<Character, Character> newAlphabet, Map.Entry<Character, Integer> encEntry) {
+        Map.Entry<Character, Integer> bestСoincidence = null;
+        for(var entry : nonEncDataAnalysis.entrySet()) {
+            if (entry.getValue() == EMPTY_VALUE)
+                continue;
+
+            if (bestСoincidence == null) {
+                bestСoincidence = entry;
+            } else if (entry.getValue() == encEntry.getValue()) {
+                newAlphabet.put(encEntry.getKey(), entry.getKey());
+                bestСoincidence = null;
+                entry.setValue(EMPTY_VALUE);
+                encEntry.setValue(EMPTY_VALUE);
+                break;
+            } else {
+                if (Math.abs(bestСoincidence.getValue() - encEntry.getValue()) < Math.abs(bestСoincidence.getValue() - entry.getValue())) {
+                    bestСoincidence = entry;
+                }
+            }
+        }
+
+        if (bestСoincidence != null) {
+            newAlphabet.put(encEntry.getKey(), bestСoincidence.getKey());
+            nonEncDataAnalysis.replace(bestСoincidence.getKey(), EMPTY_VALUE);
+        }
     }
 
     private Map<Character, Integer> getCharactersPercent(String data) {

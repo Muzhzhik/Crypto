@@ -5,6 +5,7 @@ import service.logger.Logger;
 import utils.Action;
 import utils.ConsoleColors;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleController {
@@ -17,7 +18,7 @@ public class ConsoleController {
     }
 
     private void printHeader() {
-        logger.info("dev by Sergey Muzhzhukhin.\n\n", ConsoleColors.WHITE);
+        logger.info("\n", ConsoleColors.WHITE);
         logger.info(APP_NAME, ConsoleColors.BLUE_BOLD);
         logger.info("\n\n", ConsoleColors.RESET);
     }
