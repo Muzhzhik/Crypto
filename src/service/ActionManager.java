@@ -2,8 +2,8 @@ package service;
 
 import controller.ConsoleController;
 import dao.FileManagerDAO;
-import service.brutforce.Brutforce;
-import service.brutforce.CaesarBrutfoce;
+import service.brutforce.BrutForce;
+import service.brutforce.CaesarBrutForce;
 import service.cryptor.CaesarCryptor;
 import service.cryptor.Cryptor;
 import service.analysis.Analyser;
@@ -45,8 +45,8 @@ public class ActionManager {
             doEncryptDecryptAction(scanner, path, fileManager, data, cryptor);
 
         } else if (action == Action.BRUTEFORCE) {
-            Brutforce brutforce = new CaesarBrutfoce();
-            String brutforceResult = brutforce.doBrutforce(data);
+            BrutForce brutforce = new CaesarBrutForce();
+            String brutforceResult = brutforce.doBrutForce(data);
             if (brutforce != null) {
                 saveResultToFileYN(scanner, path, fileManager, brutforceResult);
             }

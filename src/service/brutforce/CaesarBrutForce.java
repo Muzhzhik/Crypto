@@ -1,6 +1,5 @@
 package service.brutforce;
 
-import controller.ConsoleController;
 import service.Alphabet;
 import service.cryptor.CaesarCryptor;
 import service.cryptor.Cryptor;
@@ -10,10 +9,10 @@ import utils.ConsoleColors;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CaesarBrutfoce implements Brutforce{
+public class CaesarBrutForce implements BrutForce {
 
     @Override
-    public String doBrutforce(String data) {
+    public String doBrutForce(String data) {
         Logger logger = new Logger();
         Map<Integer, String> searchResults = new HashMap<>();
         Cryptor cryptor = new CaesarCryptor();
@@ -38,7 +37,7 @@ public class CaesarBrutfoce implements Brutforce{
             logger.info("Brutforce done. Possible case(s) count: " + searchResults.size() + "\n", ConsoleColors.GREEN);
 
             if (searchResults.size() > 0) {
-                return showBrutforceResults(logger, searchResults);
+                return showBrutForceResults(logger, searchResults);
             }
         }
         return null;
@@ -98,7 +97,7 @@ public class CaesarBrutfoce implements Brutforce{
     }
 
 
-    private String showBrutforceResults(Logger logger, Map<Integer, String> searchResults) {
+    private String showBrutForceResults(Logger logger, Map<Integer, String> searchResults) {
         StringBuilder stringBuilder = new StringBuilder();
         logger.info(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
         String keysString = "";
