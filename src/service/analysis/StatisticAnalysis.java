@@ -30,29 +30,29 @@ public class StatisticAnalysis implements Analyser{
     }
 
     private void findBestCoincidence(Map<Character, Integer> nonEncDataAnalysis, Map<Character, Character> newAlphabet, Map.Entry<Character, Integer> encEntry) {
-        Map.Entry<Character, Integer> bestСoincidence = null;
+        Map.Entry<Character, Integer> bestCoincidence = null;
         for(var entry : nonEncDataAnalysis.entrySet()) {
             if (entry.getValue() == EMPTY_VALUE)
                 continue;
 
-            if (bestСoincidence == null) {
-                bestСoincidence = entry;
-            } else if (entry.getValue() == encEntry.getValue()) {
+            if (bestCoincidence == null) {
+                bestCoincidence = entry;
+            } else if (entry.getValue().equals(encEntry.getValue())) {
                 newAlphabet.put(encEntry.getKey(), entry.getKey());
-                bestСoincidence = null;
+                bestCoincidence = null;
                 entry.setValue(EMPTY_VALUE);
                 encEntry.setValue(EMPTY_VALUE);
                 break;
             } else {
-                if (Math.abs(bestСoincidence.getValue() - encEntry.getValue()) < Math.abs(bestСoincidence.getValue() - entry.getValue())) {
-                    bestСoincidence = entry;
+                if (Math.abs(bestCoincidence.getValue() - encEntry.getValue()) < Math.abs(bestCoincidence.getValue() - entry.getValue())) {
+                    bestCoincidence = entry;
                 }
             }
         }
 
-        if (bestСoincidence != null) {
-            newAlphabet.put(encEntry.getKey(), bestСoincidence.getKey());
-            nonEncDataAnalysis.replace(bestСoincidence.getKey(), EMPTY_VALUE);
+        if (bestCoincidence != null) {
+            newAlphabet.put(encEntry.getKey(), bestCoincidence.getKey());
+            nonEncDataAnalysis.replace(bestCoincidence.getKey(), EMPTY_VALUE);
         }
     }
 
@@ -71,7 +71,6 @@ public class StatisticAnalysis implements Analyser{
             int percent = (int) Math.round((entry.getValue() * 100.0) / chars.length);
             entry.setValue(percent);
         }
-
         return result;
     }
 }

@@ -34,23 +34,16 @@ public class CaesarBrutfoce implements Brutforce{
                 if (!stop)
                     key++;
             }
+
             logger.info("Brutforce done. Possible case(s) count: " + searchResults.size() + "\n", ConsoleColors.GREEN);
 
             if (searchResults.size() > 0) {
-                StringBuilder stringBuilder = new StringBuilder();
-                logger.info(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
-                String keysString = "";
-                for (Map.Entry<Integer, String> entry : searchResults.entrySet()) {
-                    keysString += entry.getKey() + ", ";
-                    stringBuilder.append("key '" + entry.getKey() + "':\n\n");
-                    stringBuilder.append(entry.getValue() + "\n\n");
-                }
-                logger.info(keysString.substring(0, keysString.length() - 2), ConsoleColors.PURPLE);
-                return stringBuilder.toString();
+                return showBrutforceResults(logger, searchResults);
             }
         }
         return null;
     }
+
 
     private boolean isBrutForceDone(String dataForAnalyze) {
         String data = dataForAnalyze.toUpperCase();
@@ -66,11 +59,7 @@ public class CaesarBrutfoce implements Brutforce{
                 String additionalCh = Alphabet.containsAdditional(s);
                 if (additionalCh != null) {
                     // Если сходу понимаем, что чушь, сразу выкидываем
-                    if (!Alphabet.startWithAdditional(s) && Alphabet.containsAdditionalCount(s) > 2 && !s.equals("-")) {
-                        return false;
-                    } else if (Alphabet.startWithAdditional(s) && countOfRealWords <=0) {
-                        return false;
-                    }
+                    if (isVeryBadResult(countOfRealWords, s)) return false;
 
                     if (!s.startsWith(additionalCh)) {
                         if (s.endsWith(additionalCh)) {
@@ -96,5 +85,29 @@ public class CaesarBrutfoce implements Brutforce{
             }
         }
         return countOfRealWords > 0;
+    }
+
+
+    private boolean isVeryBadResult(int countOfRealWords, String s) {
+        if (!Alphabet.startWithAdditional(s) && Alphabet.containsAdditionalCount(s) > 2 && !s.equals("-")) {
+            return true;
+        } else if (Alphabet.startWithAdditional(s) && countOfRealWords <=0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private String showBrutforceResults(Logger logger, Map<Integer, String> searchResults) {
+        StringBuilder stringBuilder = new StringBuilder();
+        logger.info(searchResults.size() > 1 ? "POSSIBLE KEYS: " : "POSSIBLE KEY: ", ConsoleColors.PURPLE);
+        String keysString = "";
+        for (Map.Entry<Integer, String> entry : searchResults.entrySet()) {
+            keysString += entry.getKey() + ", ";
+            stringBuilder.append("key '" + entry.getKey() + "':\n\n");
+            stringBuilder.append(entry.getValue() + "\n\n");
+        }
+        logger.info(keysString.substring(0, keysString.length() - 2), ConsoleColors.PURPLE);
+        return stringBuilder.toString();
     }
 }

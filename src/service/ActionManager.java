@@ -28,6 +28,7 @@ public class ActionManager {
             exitOrResumeQuestion();
 
         Scanner scanner = new Scanner(System.in);
+
         if (action == Action.ANALYZE) {
             logger.info("\nEnter encrypted file path: ", ConsoleColors.RESET);
         } else {

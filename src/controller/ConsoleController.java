@@ -5,7 +5,6 @@ import service.logger.Logger;
 import utils.Action;
 import utils.ConsoleColors;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleController {
@@ -14,7 +13,7 @@ public class ConsoleController {
 
     public void printMainMenu() {
         printHeader();
-        printMakeChoise();
+        printMakeChoice();
     }
 
     private void printHeader() {
@@ -23,10 +22,10 @@ public class ConsoleController {
         logger.info("\n\n", ConsoleColors.RESET);
     }
 
-    private void printMakeChoise() {
+    private void printMakeChoice() {
         Action action;
         Scanner scanner = new Scanner(System.in);
-        logger.info("Make your choise:\n", ConsoleColors.RESET);
+        logger.info("Make your choice:\n", ConsoleColors.RESET);
         logger.info(Action.ENCRYPT.ordinal() + " - Encrypt\n", ConsoleColors.BLUE);
         logger.info(Action.DECRYPT.ordinal() + " - Decrypt\n", ConsoleColors.BLUE);
         logger.info(Action.BRUTEFORCE.ordinal() + " - Brut force\n", ConsoleColors.BLUE);
@@ -44,7 +43,7 @@ public class ConsoleController {
             } catch (IllegalArgumentException e) {
                 // do nothing
             }
-            logger.info("Make right choise\n", ConsoleColors.RED);
+            logger.info("Make right choice\n", ConsoleColors.RED);
         } while (true);
 
         new ActionManager(action).doAction();
